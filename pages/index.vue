@@ -1,11 +1,10 @@
 <script setup lang='ts'>
 import { ref } from 'vue';
-
-const workspaceList = ref([
-  { id: 1, name: 'workspace 1' },
-  { id: 2, name: 'workspace 2' },
-  { id: 3, name: 'workspace 3' },
-]);
+interface Workspace {
+  id: number;
+  name: string;
+}
+const workspaceList = ref<Workspace[]>([])
 const newWorkspaceName = ref('');
 
 function createWorkspace() {
@@ -24,7 +23,7 @@ function createWorkspace() {
   <h1>HOME PAGE</h1>
   <h2>recently viewed</h2>
   <h2>workspaces</h2>
-  <input type="text" v-model="newWorkspaceName" />
+  <input type="text" v-model="newWorkspaceName" @keyup.enter="createWorkspace()" />
   <button @click="createWorkspace">create a worskpace</button>
   <ul>
     <li v-for="workspace in workspaceList" :key='workspace.id'>
