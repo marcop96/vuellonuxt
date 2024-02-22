@@ -1,13 +1,35 @@
 <script setup lang='ts'>
+import { ref } from 'vue';
 
-const count = ref(0)
-function increment() {
-  count.value++
+const workspaceList = ref([
+  { id: 1, name: 'workspace 1' },
+  { id: 2, name: 'workspace 2' },
+  { id: 3, name: 'workspace 3' },
+]);
+const newWorkspaceName = ref('');
+
+function createWorkspace() {
+  const randomId = Math.floor(Math.random() * 100);
+
+  workspaceList.value.push({
+    id: randomId,
+    name: newWorkspaceName.value,
+  });
+  newWorkspaceName.value = '';
 }
+
 </script>
 
 <template>
   <h1>HOME PAGE</h1>
   <h2>recently viewed</h2>
   <h2>workspaces</h2>
+  <input type="text" v-model="newWorkspaceName" />
+  <button @click="createWorkspace">create a worskpace</button>
+  <ul>
+    <li v-for="workspace in workspaceList" :key='workspace.id'>
+      {{ workspace.name }} - {{ workspace.id }}
+
+    </li>
+  </ul>
 </template>
