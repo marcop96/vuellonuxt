@@ -5,7 +5,7 @@ const hello = ref('hello world')
 </script>
 
 <template>
-  <p>detfault layotu</p>
+  <p>detfault layout</p>
   <nav>
     <nuxt-link to="/">Home</nuxt-link>
   </nav>

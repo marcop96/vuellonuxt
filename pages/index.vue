@@ -1,10 +1,9 @@
 <script setup lang='ts'>
 import { ref } from 'vue';
-interface Workspace {
-  id: number;
-  name: string;
-}
-const workspaceList = ref<Workspace[]>([])
+import { workspaceList } from '~/store/useStore';
+
+
+
 const newWorkspaceName = ref('');
 
 function createWorkspace() {
@@ -27,7 +26,8 @@ function createWorkspace() {
   <button @click="createWorkspace">create a worskpace</button>
   <ul>
     <li v-for="workspace in workspaceList" :key='workspace.id'>
-      {{ workspace.name }} - {{ workspace.id }}
+      <nuxt-link :to="'/workspace/' + workspace.id" :workspace="workspace">
+        {{ workspace.name }} - {{ workspace.id }}</nuxt-link>
 
     </li>
   </ul>
