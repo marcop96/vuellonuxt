@@ -1,11 +1,10 @@
 <script setup lang='ts'>
 import { ref } from 'vue';
 
-const hello = ref('hello world')
+
 </script>
 
 <template>
-  <p>detfault layout</p>
   <nav>
     <nuxt-link to="/">Home</nuxt-link>
   </nav>
