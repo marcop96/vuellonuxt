@@ -33,7 +33,7 @@ function createCard(column: any) {
       name: column.newCardName
     }))
   }
-
+  column.newCardName = ''
 }
 
 
@@ -42,13 +42,14 @@ function createCard(column: any) {
 <template>
   <h1 class="text-center text-5xl">{{ workspace.name }} - {{ workspace.id }}</h1>
   <section>
-    <input type="text" class="border border-2  p-2 mx-2" v-model="newColumnName" />
+    <input type="text" class="border border-2  p-2 mx-2" v-model="newColumnName" @keyup.enter="createColumn" />
     <button @click="createColumn" class="bg-red-500 rounded-lg">Create Column</button>
   </section>
   <div class="column-grid gap-2 mx-1 ">
     <div class="h-96 bg-gray-500 rounded-sm" v-for="column in board.columns">
       <h2 class='text-center'>{{ column.name }}</h2>
-      <input type="text" class="border border-2  p-2 mx-2" v-model="column.newCardName" />
+      <input type="text" class="border border-2  p-2 mx-2" v-model="column.newCardName"
+        @keyup.enter="createCard(column)" />
       <button @click="createCard(column)" class="bg-red-500 rounded-lg">Create Card</button>
 
       <ul>
