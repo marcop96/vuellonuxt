@@ -5,8 +5,8 @@ import { workspaceList } from '../../store/useStore'
 import type { Workspace } from '../../types'
 
 const route = useRoute()
-const newBoardName = ref('')
-const newCardName = ref('')
+const newColumnName = ref('')
+
 const board = ref({
   name: 'test',
   columns: [] as any
@@ -15,15 +15,20 @@ const workspace = (workspaceList.value.find((w: Workspace) => w.id === Number(ro
 
 function createColumn() {
   board.value.columns.push({
-    name: newBoardName.value,
+    newCardName: '',
+    name: newColumnName.value,
     cards: []
   })
-  newBoardName.value = ''
+  newColumnName.value = ''
+
 }
 
 function createCard(column: any) {
-  (column.cards.push({ name: newCardName.value }))
-  console.log((column.cards))
+  (column.cards.push({
+    id: Math.random(),
+    name: column.newCardName
+  }))
+
 }
 
 
@@ -32,13 +37,13 @@ function createCard(column: any) {
 <template>
   <h1 class="text-center text-5xl">{{ workspace.name }} - {{ workspace.id }}</h1>
   <section>
-    <input type="text" class="border border-2  p-2 mx-2" v-model="newBoardName" />
+    <input type="text" class="border border-2  p-2 mx-2" v-model="newColumnName" />
     <button @click="createColumn" class="bg-red-500 rounded-lg">Create Column</button>
   </section>
-  <div class="grid grid-cols-4 gap-2 mx-1 ">
+  <div class="column-grid gap-2 mx-1 ">
     <div class="h-96 bg-gray-500 rounded-sm" v-for="column in board.columns">
       <h2 class='text-center'>{{ column.name }}</h2>
-      <input type="text" class="border border-2  p-2 mx-2" v-model="newCardName" />
+      <input type="text" class="border border-2  p-2 mx-2" v-model="column.newCardName" />
       <button @click="createCard(column)" class="bg-red-500 rounded-lg">Create Card</button>
 
       <ul>
@@ -49,3 +54,8 @@ function createCard(column: any) {
 
   </div>
 </template>
+<style scoped> .column-grid {
+   display: grid;
+   grid-template-columns: repeat(v-bind(board.columns.length), 1fr)
+ }
+</style>
