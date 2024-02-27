@@ -14,20 +14,25 @@ const board = ref({
 const workspace = (workspaceList.value.find((w: Workspace) => w.id === Number(route.params.id)) as Workspace)
 
 function createColumn() {
-  board.value.columns.push({
-    newCardName: '',
-    name: newColumnName.value,
-    cards: []
-  })
-  newColumnName.value = ''
-
+  if (newColumnName.value) {
+    board.value.columns.push({
+      newCardName: '',
+      name: newColumnName.value,
+      cards: []
+    })
+    newColumnName.value = ''
+  }
+  else { console.log(('no name')) }
 }
 
 function createCard(column: any) {
-  (column.cards.push({
-    id: Math.random(),
-    name: column.newCardName
-  }))
+  if (column.newCardName) {
+
+    (column.cards.push({
+      id: Math.random(),
+      name: column.newCardName
+    }))
+  }
 
 }
 
