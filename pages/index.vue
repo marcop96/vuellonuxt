@@ -19,16 +19,37 @@ function createWorkspace() {
 </script>
 
 <template>
-  <h1>HOME PAGE</h1>
-  <h2>recently viewed</h2>
+  <h1>VUELLO</h1>
+  <h2>recently viewed
+  </h2>
   <h2>workspaces</h2>
-  <input type="text" v-model="newWorkspaceName" @keyup.enter="createWorkspace()" />
+  <input type="text" class="custom-input" placeholder="workspace name..." v-model="newWorkspaceName"
+    @keyup.enter="createWorkspace()" />
   <button @click="createWorkspace">create a worskpace</button>
   <ul>
-    <li v-for="workspace in workspaceList" :key='workspace.id'>
-      <nuxt-link :to="'/workspace/' + workspace.id" :workspace="workspace">
+    <li v-for="workspace in workspaceList" :key='workspace.id' class="m-2 p-2 text-white border-2 block text-center">
+      <nuxt-link :to="'/workspace/' + workspace.id" :workspace="workspace" class="p-2 my-4 block w-full">
         {{ workspace.name }} - {{ workspace.id }}</nuxt-link>
 
     </li>
   </ul>
 </template>
+
+<style scoped> h1 {
+   color: white;
+   font-size: 36px;
+ }
+
+ .custom-input {
+   color: #333;
+   background-color: #f4f4f4
+ }
+
+ .custom-input {
+   color: #333;
+   background-color: #f4f4f4;
+   border: 1px solid #333;
+   margin: 5px;
+   padding: 5px;
+ }
+</style>
