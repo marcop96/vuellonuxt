@@ -1,6 +1,7 @@
 <script setup lang='ts'>
 import { ref } from 'vue';
-import { workspaceList } from '~/store/useStore';
+import { workspaceList } from '../store/useStore';
+import ActionButton from '../components/actionButton.vue';
 
 
 
@@ -25,7 +26,7 @@ function createWorkspace() {
   <h2>workspaces</h2>
   <input type="text" class="custom-input" placeholder="workspace name..." v-model="newWorkspaceName"
     @keyup.enter="createWorkspace()" />
-  <button @click="createWorkspace">create a worskpace</button>
+  <ActionButton text="create workspace" @click="createWorkspace" />
   <ul>
     <li v-for="workspace in workspaceList" :key='workspace.id' class="m-2 p-2 text-white border-2 block text-center">
       <nuxt-link :to="'/workspace/' + workspace.id" :workspace="workspace" class="p-2 my-4 block w-full">
@@ -40,16 +41,12 @@ function createWorkspace() {
    font-size: 36px;
  }
 
- .custom-input {
-   color: #333;
-   background-color: #f4f4f4
- }
-
- .custom-input {
+ input {
    color: #333;
    background-color: #f4f4f4;
    border: 1px solid #333;
    margin: 5px;
    padding: 5px;
+   font-size: 0.9rem;
  }
 </style>

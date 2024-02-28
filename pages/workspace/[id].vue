@@ -3,6 +3,7 @@ import { ref } from 'vue'
 import { useRoute } from 'vue-router'
 import { workspaceList } from '../../store/useStore'
 import type { Workspace } from '../../types'
+import actionButton from '../../components/actionButton.vue'
 
 
 const route = useRoute()
@@ -12,6 +13,7 @@ const board = ref({
   name: 'test',
   columns: [] as any
 });
+
 const workspace = (workspaceList.value.find((w: Workspace) => w.id === Number(route.params.id)) as Workspace)
 
 function createColumn() {
@@ -37,7 +39,6 @@ function createCard(column: any) {
   column.newCardName = ''
 }
 
-
 </script>
 
 <template>
@@ -45,17 +46,17 @@ function createCard(column: any) {
   <section>
     <input type="text" placeholder="column name" class=" custom-input" v-model="newColumnName"
       @keyup.enter="createColumn" />
-    <button @click="createColumn" class="bg-red-500 rounded-lg p-3 m-2">Create Column</button>
+    <actionButton text="create Column" @click="createColumn" />
   </section>
   <div class="column-grid gap-2 mx-1">
-    <div class="h-96 bg-middletonne rounded-sm" v-for="column in board.columns">
+    <div class="h-96 bg-middletonne rounded-sm" v-for="column in  board.columns ">
       <h2 class='text-center'>{{ column.name }}</h2>
       <input type="text" placeholder="card name" class=" custom-input" v-model="column.newCardName"
         @keyup.enter="createCard(column)" />
-      <button @click="createCard(column)" class="bg-red-500 rounded-lg">Create Card</button>
+      <actionButton text="create Card" @click="createCard(column)" />
 
       <ul>
-        <li v-for="card in column.cards">
+        <li v-for=" card  in  column.cards ">
           {{ card.name }}</li>
       </ul>
     </div>
@@ -67,15 +68,17 @@ function createCard(column: any) {
    grid-template-columns: repeat(v-bind(board.columns.length), 1fr)
  }
 
- .custom-input {
+
+ .bg-middletonne {
+   background-color: #3C8171
+ }
+
+ input {
    color: #333;
    background-color: #f4f4f4;
    border: 1px solid #333;
    margin: 5px;
    padding: 5px;
- }
-
- .bg-middletonne {
-   background-color: #3C8171
+   font-size: 0.9rem;
  }
 </style>
