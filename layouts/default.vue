@@ -5,8 +5,30 @@ import { ref } from 'vue';
 </script>
 
 <template>
-  <nav>
-    <nuxt-link to="/">Home</nuxt-link>
-  </nav>
-  <slot />
+  <header class="main-header">
+    <nav>
+      <nuxt-link to="/">Home</nuxt-link>
+    </nav>
+  </header>
+  <main class="main-content">
+
+    <slot />
+  </main>
 </template>
+<style>
+.main-header {
+  background-color: #42b883;
+  color: white;
+  padding: 1rem;
+  text-align: center;
+  font-size: 2rem;
+  font-weight: bold;
+
+}
+
+.main-content {
+  background-color: #35495e;
+  height: 100vh;
+
+}
+</style>
