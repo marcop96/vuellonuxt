@@ -41,10 +41,10 @@ function createCard(column: any) {
   column.newCardName = "";
 }
 
-function moveCard(id, currentColumn, newColumn) {
+function moveCard(id: Number, currentColumn: String, newColumn: String) {
   const card = board.value.columns
-    .find((column) => column.cards.find((card) => card.id === id))
-    .cards.find((card) => card.id === id);
+    .find((column: string) => column.cards.find((card: any) => card.id === id))
+    .cards.find((card: any) => card.id === id);
   const column = board.value.columns.find(
     (column) => column.name === newColumn
   );
