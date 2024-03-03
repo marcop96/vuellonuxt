@@ -5,7 +5,7 @@ import { workspaceList } from "../../store/useStore";
 import type { Workspace } from "../../types";
 import actionButton from "../../components/actionButton.vue";
 import CardComponent from "~/components/CardComponent.vue";
-
+import draggable from "vuedraggable";
 const route = useRoute();
 const newColumnName = ref("");
 
@@ -37,27 +37,11 @@ function createCard(column: any) {
       id: Math.random(),
       name: column.newCardName,
     });
+    column.newCardName = ""; // Clear input after creating the card
   }
-  column.newCardName = "";
 }
 
-function moveCard(id: Number, currentColumn: String, newColumn: String) {
-  const card = board.value.columns
-    .find((column: string) => column.cards.find((card: any) => card.id === id))
-    .cards.find((card: any) => card.id === id);
-  const column = board.value.columns.find(
-    (column) => column.name === newColumn
-  );
-  column.cards.push(card);
-  board.value.columns
-    .find((column) => column.name === currentColumn)
-    .cards.splice(
-      board.value.columns
-        .find((column) => column.name === currentColumn)
-        .cards.findIndex((card) => card.id === id),
-      1
-    );
-}
+let drag = false;
 </script>
 
 <template>
@@ -75,7 +59,11 @@ function moveCard(id: Number, currentColumn: String, newColumn: String) {
     <actionButton text="create Column" @click="createColumn" />
   </section>
   <div class="column-grid gap-2 mx-1">
-    <div class="h-96 bg-middletonne rounded-sm" v-for="column in board.columns">
+    <div
+      class="h-96 bg-middletonne rounded-sm"
+      v-for="column in board.columns"
+      :key="column.name"
+    >
       <h2 class="text-center">{{ column.name }}</h2>
       <input
         type="text"
@@ -86,33 +74,24 @@ function moveCard(id: Number, currentColumn: String, newColumn: String) {
       />
       <actionButton text="create Card" @click="createCard(column)" />
 
-      <!-- <ul>
-        <CardComponent
-          v-for="card in column.cards"
-          :key="card.id"
-          :name="card.name"
-          :id="card.id"
-          :column="column.name"
-        />
-      </ul> -->
       <ul>
-        <li
-          v-for="card in column.cards"
-          :key="card.id"
-          style="background-color: white; margin-bottom: 3px"
+        <draggable
+          v-model="column.cards"
+          group="people"
+          @start="drag = true"
+          @end="drag = false"
+          item-key="id"
         >
-          <h4 class="text-center">{{ card.name }}</h4>
-          <p>move list</p>
-          <select
-            name="move-list"
-            id="first-move-list"
-            @change="moveCard(card.id, column.name, $event.target.value)"
-          >
-            <option v-for="column in board.columns" :key="column.name">
-              {{ column.name }}
-            </option>
-          </select>
-        </li>
+          <template #item="{ element }">
+            <div>
+              <CardComponent
+                :card="element"
+                :column="column.name"
+                :columns="board.columns"
+              />
+            </div>
+          </template>
+        </draggable>
       </ul>
     </div>
   </div>

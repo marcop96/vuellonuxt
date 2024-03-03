@@ -1,18 +1,49 @@
 <script setup lang="ts">
+import type { Card, Column } from "../types";
+
 const props = defineProps({
-  id: Number,
-  name: String,
-  column: String,
+  card: {
+    type: Object as () => Card,
+    required: true,
+  },
+  column: {
+    type: String,
+    required: true,
+  },
+  columns: {
+    type: Array as () => Column[],
+    required: true,
+  },
 });
 
-console.log(props);
+// function moveCard(id: Number, currentColumn: any, newColumn: String) {
+//   const card = props.columns
+//     .find((column: Column) => column.cards.find((card: Card) => card.id === id))
+//     ?.cards.find((card: Card) => card.id === id);
+
+//   const targetColumn = props.columns.find(
+//     (column: Column) => column.name === newColumn
+//   );
+
+//   // if the target column exists, add the card to it
+//   if (targetColumn) {
+//     targetColumn.cards.push(card as Card);
+//     // remove the card from the current column
+//     const findCurrentColumn = props.columns.find(
+//       (column: Column) => column.name === currentColumn
+//     );
+//     console.log(currentColumn);
+//     currentColumn.cards.splice(
+//       currentColumn.cards.findIndex((card: Card) => card.id === id),
+//       1
+//     );
+//   }
+// }
 </script>
 
 <template>
   <main class="card-background">
-    <p>{{ props.name }}</p>
-
-    <pre>{{ props }}</pre>
+    {{ card.name }}
   </main>
 </template>
 
