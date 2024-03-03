@@ -9,6 +9,15 @@ import draggable from "vuedraggable";
 const route = useRoute();
 const newColumnName = ref("");
 
+onMounted(() => {
+  if (localStorage.getItem("board")) {
+    board.value = JSON.parse(localStorage.getItem("board"));
+  }
+  if (localStorage.getItem("cards")) {
+    board.value.columns.cards = JSON.parse(localStorage.getItem("cards"));
+  }
+});
+
 const board = ref({
   name: "test",
   columns: [] as any,
@@ -29,6 +38,7 @@ function createColumn() {
   } else {
     console.log("no name");
   }
+  localStorage.setItem("board", JSON.stringify(board.value));
 }
 
 function createCard(column: any) {
@@ -38,6 +48,8 @@ function createCard(column: any) {
       name: column.newCardName,
     });
     column.newCardName = "";
+
+    localStorage.setItem("cards", JSON.stringify(column.cards));
   }
 }
 

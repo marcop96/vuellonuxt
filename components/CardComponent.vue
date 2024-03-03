@@ -43,7 +43,7 @@ const props = defineProps({
 
 <template>
   <main class="card-background">
-    {{ card.name }}
+    <p class="text-center p-2">{{ card.name }}</p>
   </main>
 </template>
 

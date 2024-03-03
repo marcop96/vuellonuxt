@@ -5,6 +5,11 @@ import ActionButton from "../components/actionButton.vue";
 
 const newWorkspaceName = ref("");
 
+onMounted(() => {
+  if (localStorage.getItem("workspaceList")) {
+    workspaceList.value = JSON.parse(localStorage.getItem("workspaceList"));
+  }
+});
 function createWorkspace() {
   const randomId = Math.floor(Math.random() * 100);
 
@@ -13,6 +18,8 @@ function createWorkspace() {
     name: newWorkspaceName.value,
   });
   newWorkspaceName.value = "";
+
+  localStorage.setItem("workspaceList", JSON.stringify(workspaceList.value));
 }
 </script>
 
