@@ -77,12 +77,17 @@ let drag = false;
       <ul>
         <draggable
           :animation="200"
+          ghostClass="moving-card"
+          chosenClass="sortable-chosen"
+          dragClass="sortable-drag"
+          easing="cubic-bezier(0.32, 0, 0.67, 0)"
           class="h-80"
           v-model="column.cards"
           group="people"
           @start="drag = true"
           @end="drag = false"
           item-key="id"
+          :remove-element="true"
         >
           <template #item="{ element }">
             <div>
