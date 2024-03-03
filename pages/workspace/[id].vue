@@ -37,7 +37,7 @@ function createCard(column: any) {
       id: Math.random(),
       name: column.newCardName,
     });
-    column.newCardName = ""; // Clear input after creating the card
+    column.newCardName = "";
   }
 }
 
@@ -76,6 +76,8 @@ let drag = false;
 
       <ul>
         <draggable
+          :animation="200"
+          class="h-80"
           v-model="column.cards"
           group="people"
           @start="drag = true"
@@ -113,5 +115,8 @@ input {
   margin: 5px;
   padding: 5px;
   font-size: 0.9rem;
+}
+.moving-card {
+  opacity: 0.5;
 }
 </style>
