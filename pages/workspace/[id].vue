@@ -13,9 +13,14 @@ onMounted(() => {
     (workspaceList.value = JSON.parse(
       localStorage.getItem("workspaceList") as string
     ));
-  board.value = workspaceList.value.find(
+  const foundWorkspace = workspaceList.value.find(
     (w: Workspace) => w.id === Number(route.params.id)
-  ) as Workspace;
+  );
+  if (foundWorkspace) {
+    board.value = foundWorkspace as Workspace;
+  } else {
+    console.log("no workspace found");
+  }
 });
 
 const board = ref({
