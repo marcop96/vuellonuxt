@@ -19,7 +19,7 @@ onMounted(() => {
 });
 
 const board = ref({
-  name: "test",
+  name: "board",
   columns: [] as any,
 });
 
@@ -58,7 +58,7 @@ let drag = false;
 
 <template>
   <h1 class="text-center text-5xl p-3 text-white">
-    {{ workspace.name }} - {{ workspace.id }}
+    {{ workspace.name }}
   </h1>
   <section>
     <input
@@ -72,21 +72,23 @@ let drag = false;
   </section>
   <div class="column-grid gap-2 mx-1">
     <div
-      class="h-96 bg-middletonne rounded-sm"
+      class="h-96 bg-middletonne rounded-lg mx-1"
       v-for="column in board.columns"
       :key="column.name"
     >
-      <h2 class="text-center">{{ column.name }}</h2>
-      <input
-        type="text"
-        placeholder="card name"
-        class="custom-input"
-        v-model="column.newCardName"
-        @keyup.enter="createCard(column)"
-      />
-      <actionButton text="create Card" @click="createCard(column)" />
+      <h2 class="text-center text-2xl text-white">{{ column.name }}</h2>
+      <aside class="flex flex-col justify-center">
+        <input
+          type="text"
+          placeholder="card name"
+          class="custom-input"
+          v-model="column.newCardName"
+          @keyup.enter="createCard(column)"
+        />
+        <actionButton text="create Card" @click="createCard(column)" />
+      </aside>
 
-      <ul>
+      <ul class="mx-3">
         <draggable
           :animation="200"
           ghostClass="moving-card"
@@ -132,6 +134,7 @@ input {
   margin: 5px;
   padding: 5px;
   font-size: 0.9rem;
+  border-radius: 4px;
 }
 .moving-card {
   opacity: 0.5;
