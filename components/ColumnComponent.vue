@@ -62,4 +62,13 @@ const drag = defineModel<boolean>("drag", { required: true });
 .bg-middletonne {
   background-color: #3c8171;
 }
+input {
+  color: #333;
+  background-color: #f4f4f4;
+  border: 1px solid #333;
+  margin: 5px;
+  padding: 5px;
+  font-size: 0.9rem;
+  border-radius: 4px;
+}
 </style>
