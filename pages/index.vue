@@ -19,6 +19,7 @@ function createWorkspace() {
   });
   newWorkspaceName.value = "";
 
+  console.log(workspaceList.value);
   localStorage.setItem("workspaceList", JSON.stringify(workspaceList.value));
 }
 </script>
