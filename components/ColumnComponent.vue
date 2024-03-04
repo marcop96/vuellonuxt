@@ -1,0 +1,65 @@
+<script setup lang="ts">
+import draggable from "vuedraggable";
+
+defineProps<{
+  board: { name: string; columns: any };
+  createCard: (column: any) => void;
+  handleDragEnd: () => void;
+}>();
+const drag = defineModel<boolean>("drag", { required: true });
+</script>
+
+<template>
+  <div class="column-grid gap-2 mx-1">
+    <div
+      class="h-96 bg-middletonne rounded-lg mx-1"
+      v-for="column in board.columns"
+      :key="column.name"
+    >
+      <h2 class="text-center text-2xl text-white">{{ column.name }}</h2>
+      <aside class="flex flex-col justify-center">
+        <input
+          type="text"
+          placeholder="card name"
+          class="custom-input"
+          v-model="column.newCardName"
+          @keyup.enter="createCard(column)"
+        />
+        <actionButton text="create Card" @click="createCard(column)" />
+      </aside>
+
+      <ul class="mx-3">
+        <draggable
+          :animation="200"
+          ghostClass="moving-card"
+          chosenClass="sortable-chosen"
+          dragClass="sortable-drag"
+          easing="cubic-bezier(0.32, 0, 0.67, 0)"
+          class="h-80 bg-middletone rounded-lg p-2 overflow-y-auto"
+          v-model="column.cards"
+          group="people"
+          @start="drag = true"
+          @end="handleDragEnd"
+          item-key="id"
+          :remove-element="true"
+        >
+          <template #item="{ element }">
+            <div>
+              <CardComponent
+                :card="element"
+                :column="column.name"
+                :columns="board.columns"
+              />
+            </div>
+          </template>
+        </draggable>
+      </ul>
+    </div>
+  </div>
+</template>
+
+<style>
+.bg-middletonne {
+  background-color: #3c8171;
+}
+</style>
