@@ -16,34 +16,19 @@ const props = defineProps({
   },
 });
 
-// function moveCard(id: Number, currentColumn: any, newColumn: String) {
-//   const card = props.columns
-//     .find((column: Column) => column.cards.find((card: Card) => card.id === id))
-//     ?.cards.find((card: Card) => card.id === id);
+function deleteCard() {
+  const column = props.columns.find((c) => c.name === props.column);
+  if (!column) return;
+  column.cards = column.cards.filter((c) => c.id !== props.card.id);
 
-//   const targetColumn = props.columns.find(
-//     (column: Column) => column.name === newColumn
-//   );
-
-//   // if the target column exists, add the card to it
-//   if (targetColumn) {
-//     targetColumn.cards.push(card as Card);
-//     // remove the card from the current column
-//     const findCurrentColumn = props.columns.find(
-//       (column: Column) => column.name === currentColumn
-//     );
-//     console.log(currentColumn);
-//     currentColumn.cards.splice(
-//       currentColumn.cards.findIndex((card: Card) => card.id === id),
-//       1
-//     );
-//   }
-// }
+  console.log(column.cards);
+  localStorage.setItem("cards", JSON.stringify(column.cards));
+}
 </script>
 
 <template>
   <main class="card-background">
-    <p class="text-center p-2">{{ card.name }}</p>
+    <p class="text-center p-2" @dblclick="deleteCard()">{{ card.name }}</p>
   </main>
 </template>
 
@@ -51,5 +36,6 @@ const props = defineProps({
 .card-background {
   background-color: #f5f5f5;
   margin-bottom: 4px;
+  border-radius: 4px;
 }
 </style>
