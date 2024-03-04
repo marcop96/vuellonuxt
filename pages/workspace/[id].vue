@@ -10,19 +10,19 @@ const route = useRoute();
 const newColumnName = ref("");
 
 onMounted(() => {
-  if (localStorage.getItem("board")) {
-    board.value = JSON.parse(localStorage.getItem("board"));
-  }
-  if (localStorage.getItem("cards")) {
-    board.value.columns.cards = JSON.parse(localStorage.getItem("cards"));
-  }
+  localStorage.getItem("workspaceList") &&
+    (workspaceList.value = JSON.parse(
+      localStorage.getItem("workspaceList") as string
+    ));
+  board.value = workspaceList.value.find(
+    (w: Workspace) => w.id === Number(route.params.id)
+  ) as Workspace;
 });
 
 const board = ref({
   name: "board",
   columns: [] as any,
 });
-
 const workspace = workspaceList.value.find(
   (w: Workspace) => w.id === Number(route.params.id)
 ) as Workspace;
@@ -30,15 +30,23 @@ const workspace = workspaceList.value.find(
 function createColumn() {
   if (newColumnName.value) {
     board.value.columns.push({
-      newCardName: "",
       name: newColumnName.value,
       cards: [],
     });
     newColumnName.value = "";
+    // push new column to worskpaceList
+
+    workspaceList.value = workspaceList.value.map((w: Workspace) => {
+      if (w.id === workspace.id) {
+        w.columns = board.value.columns;
+      }
+      console.log(workspaceList.value);
+      return w;
+    });
+    localStorage.setItem("workspaceList", JSON.stringify(workspaceList.value));
   } else {
     console.log("no name");
   }
-  localStorage.setItem("board", JSON.stringify(board.value));
 }
 
 function createCard(column: any) {
@@ -48,9 +56,35 @@ function createCard(column: any) {
       name: column.newCardName,
     });
     column.newCardName = "";
-
-    localStorage.setItem("cards", JSON.stringify(column.cards));
   }
+  workspaceList.value = workspaceList.value.map((w) => {
+    if (w.id === workspace.id) {
+      const boardIndex = w.columns.findIndex(
+        (b) => b.name === board.value.name
+      );
+      if (boardIndex !== -1) {
+        w.columns[boardIndex] = board.value.columns;
+      }
+    }
+    return w;
+  });
+  localStorage.setItem("workspaceList", JSON.stringify(workspaceList.value));
+}
+
+function handleDragEnd() {
+  drag = false;
+  workspaceList.value = workspaceList.value.map((w) => {
+    if (w.id === workspace.id) {
+      const boardIndex = w.columns.findIndex(
+        (b) => b.name === board.value.name
+      );
+      if (boardIndex !== -1) {
+        w.columns[boardIndex] = board.value.columns;
+      }
+    }
+    return w;
+  });
+  localStorage.setItem("workspaceList", JSON.stringify(workspaceList.value));
 }
 
 let drag = false;
@@ -99,7 +133,7 @@ let drag = false;
           v-model="column.cards"
           group="people"
           @start="drag = true"
-          @end="drag = false"
+          @end="handleDragEnd"
           item-key="id"
           :remove-element="true"
         >

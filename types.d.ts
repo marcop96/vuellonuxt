@@ -1,6 +1,7 @@
 export interface Workspace {
   id: number;
   name: string;
+  columns: Column[];
 }
 
 export interface Card {

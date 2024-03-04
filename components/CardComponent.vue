@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import { workspaceList } from "~/store/useStore";
 import type { Card, Column } from "../types";
 
 const props = defineProps({
@@ -21,8 +22,7 @@ function deleteCard() {
   if (!column) return;
   column.cards = column.cards.filter((c) => c.id !== props.card.id);
 
-  console.log(column.cards);
-  localStorage.setItem("cards", JSON.stringify(column.cards));
+  localStorage.setItem("workspaceList", JSON.stringify(workspaceList.value));
 }
 </script>
 
