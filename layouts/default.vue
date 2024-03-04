@@ -1,7 +1,9 @@
-<script setup lang='ts'>
-import { ref } from 'vue';
+<script setup lang="ts">
+import { ref } from "vue";
 
-
+useHead({
+  title: "TrelloNuxt",
+});
 </script>
 
 <template>
@@ -11,7 +13,6 @@ import { ref } from 'vue';
     </nav>
   </header>
   <main class="main-content">
-
     <slot />
   </main>
 </template>
@@ -23,12 +24,10 @@ import { ref } from 'vue';
   text-align: center;
   font-size: 2rem;
   font-weight: bold;
-
 }
 
 .main-content {
   background-color: #35495e;
   height: 100vh;
-
 }
 </style>
