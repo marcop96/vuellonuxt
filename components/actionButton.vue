@@ -7,7 +7,7 @@ const props = defineProps({
 </script>
 
 <template>
-  <button class="bg-red-500 rounded-sm p-2 m-2">
+  <button class="bg-red-500 rounded-lg p-2 m-2">
     {{ props.text }}
   </button>
 </template>
