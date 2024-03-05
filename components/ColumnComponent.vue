@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import draggable from "vuedraggable";
-import type { Workspace } from "~/types";
+import type { Column, Workspace } from "~/types";
 import { workspaceList } from "~/store/useStore";
 
 const props = defineProps<{
@@ -8,8 +8,22 @@ const props = defineProps<{
   createCard: (column: any) => void;
 }>();
 const drag = ref(false);
+
 function handleDragEnd() {
   drag.value = false;
+  workspaceList.value = workspaceList.value.map((w: Workspace) => {
+    if (w.name === props.board.name) {
+      w.columns = props.board.columns;
+    }
+    return w;
+  });
+  localStorage.setItem("workspaceList", JSON.stringify(workspaceList.value));
+}
+
+function removeColumn(column: Column) {
+  props.board.columns = props.board.columns.filter(
+    (c: Column) => c.name !== column.name
+  );
   workspaceList.value = workspaceList.value.map((w: Workspace) => {
     if (w.name === props.board.name) {
       w.columns = props.board.columns;
@@ -33,11 +47,11 @@ function handleDragEnd() {
           <input
             type="text"
             placeholder="card name"
-            class="custom-input w-"
+            class="custom-input w-5/6 mx-2"
             v-model="column.newCardName"
             @keyup.enter="createCard(column)"
           />
-          <button class="w-2">pe</button>
+          <button class="mx-1" @click="removeColumn(column)">&#10006;</button>
         </div>
         <actionButton text="create Card" @click="createCard(column)" />
       </aside>
