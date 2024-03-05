@@ -22,7 +22,7 @@ function handleDragEnd() {
 
 function removeColumn(column: Column) {
   props.board.columns = props.board.columns.filter(
-    (c: Column) => c.name !== column.name
+    (c: Column) => c.id !== column.id
   );
   workspaceList.value = workspaceList.value.map((w: Workspace) => {
     if (w.name === props.board.name) {

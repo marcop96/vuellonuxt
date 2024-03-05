@@ -38,6 +38,7 @@ function createColumn() {
     board.value.columns.push({
       name: newColumnName.value,
       cards: [],
+      id: Math.random(),
     });
     newColumnName.value = "";
 
