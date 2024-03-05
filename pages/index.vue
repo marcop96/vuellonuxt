@@ -37,24 +37,22 @@ function createWorkspace() {
       @keyup.enter="createWorkspace()"
     />
     <ActionButton
-      text="create workspace"
-      class="w-fit"
+      text="Create Workspace"
+      class="w-fit hover:opacity-50 transition-all"
       @click="createWorkspace"
     />
   </div>
-  <ul>
+  <ul class="grid grid-cols-4">
     <li
       v-for="workspace in workspaceList"
       :key="workspace.id"
-      class="m-2 p-2 text-white border-2 w-72 text-center"
+      class="text-white bg-middletonne hover:opacity-50 rounded-lg p-4 m-4 text-center transition-all"
     >
-      <nuxt-link
-        :to="'/workspace/' + workspace.id"
-        :workspace="workspace"
-        class="p-2 my-4 block w-full"
-      >
-        {{ workspace.name }} - {{ workspace.id }}</nuxt-link
-      >
+      <nuxt-link :to="'/workspace/' + workspace.id" :workspace="workspace">
+        <div class="w-full h-full">
+          {{ workspace.name }}
+        </div>
+      </nuxt-link>
     </li>
   </ul>
 </template>
@@ -75,5 +73,9 @@ input {
   margin: 5px;
   padding: 5px;
   font-size: 0.9rem;
+}
+
+.bg-middletonne {
+  background-color: #3c8171;
 }
 </style>
