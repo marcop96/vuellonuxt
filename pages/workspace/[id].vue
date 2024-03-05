@@ -12,10 +12,10 @@ const board = ref({
   name: "board",
   columns: [] as any,
 });
+
 const workspace = workspaceList.value.find(
   (w: Workspace) => w.id === Number(route.params.id)
 ) as Workspace;
-
 onMounted(() => {
   // Retrieve workspaceList from localStorage
   const storedWorkspaceList = localStorage.getItem("workspaceList");
@@ -85,7 +85,7 @@ function createCard(column: any) {
 
 <template>
   <h1 class="text-center text-5xl p-3 text-white">
-    {{ workspace.name }}
+    {{ board.name }}
   </h1>
   <section class="flex justify-center">
     <input
