@@ -12,6 +12,8 @@ onMounted(() => {
     ));
 });
 function createWorkspace() {
+  if (!newWorkspaceName.value) return console.log("no name");
+
   const randomId = Math.floor(Math.random() * 100);
 
   workspaceList.value.push({
