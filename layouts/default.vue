@@ -33,6 +33,6 @@ useHead({
   height: 100vh;
 }
 .container {
-  min-width: max-content;
+  min-width: 100%;
 }
 </style>
