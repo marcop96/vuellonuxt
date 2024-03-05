@@ -1,18 +1,28 @@
 <script setup lang="ts">
-import { ref } from "vue";
+import { ref, onMounted } from "vue";
 import { useRoute } from "vue-router";
 import { workspaceList } from "../../store/useStore";
 import type { Workspace } from "../../types";
 import actionButton from "../../components/actionButton.vue";
 import Column from "../../components/ColumnComponent.vue";
+
 const route = useRoute();
 const newColumnName = ref("");
+const board = ref({
+  name: "board",
+  columns: [] as any,
+});
+const workspace = workspaceList.value.find(
+  (w: Workspace) => w.id === Number(route.params.id)
+) as Workspace;
 
 onMounted(() => {
-  localStorage.getItem("workspaceList") &&
-    (workspaceList.value = JSON.parse(
-      localStorage.getItem("workspaceList") as string
-    ));
+  // Retrieve workspaceList from localStorage
+  const storedWorkspaceList = localStorage.getItem("workspaceList");
+  if (storedWorkspaceList) {
+    workspaceList.value = JSON.parse(storedWorkspaceList);
+  }
+
   const foundWorkspace = workspaceList.value.find(
     (w: Workspace) => w.id === Number(route.params.id)
   );
@@ -23,14 +33,6 @@ onMounted(() => {
   }
 });
 
-const board = ref({
-  name: "board",
-  columns: [] as any,
-});
-const workspace = workspaceList.value.find(
-  (w: Workspace) => w.id === Number(route.params.id)
-) as Workspace;
-
 function createColumn() {
   if (newColumnName.value) {
     board.value.columns.push({
@@ -38,14 +40,16 @@ function createColumn() {
       cards: [],
     });
     newColumnName.value = "";
-    // push new column to worskpaceList
 
+    // Update workspaceList with new column
     workspaceList.value = workspaceList.value.map((w: Workspace) => {
       if (w.id === workspace.id) {
         w.columns = board.value.columns;
       }
       return w;
     });
+
+    // Save workspaceList to localStorage
     localStorage.setItem("workspaceList", JSON.stringify(workspaceList.value));
   } else {
     console.log("no name");
@@ -60,6 +64,8 @@ function createCard(column: any) {
     });
     column.newCardName = "";
   }
+
+  // Update workspaceList with new card
   workspaceList.value = workspaceList.value.map((w) => {
     if (w.id === workspace.id) {
       const boardIndex = w.columns.findIndex(
@@ -71,6 +77,8 @@ function createCard(column: any) {
     }
     return w;
   });
+
+  // Save workspaceList to localStorage
   localStorage.setItem("workspaceList", JSON.stringify(workspaceList.value));
 }
 
@@ -81,7 +89,7 @@ let drag = false;
   <h1 class="text-center text-5xl p-3 text-white">
     {{ workspace.name }}
   </h1>
-  <section>
+  <section class="flex justify-center">
     <input
       type="text"
       placeholder="column name"
@@ -93,6 +101,7 @@ let drag = false;
   </section>
   <Column :board="board" :createCard="createCard" v-model:drag="drag" />
 </template>
+
 <style scoped>
 .column-grid {
   display: grid;
@@ -112,7 +121,18 @@ input {
   font-size: 0.9rem;
   border-radius: 4px;
 }
+
 .moving-card {
   opacity: 0.5;
+}
+
+@media (max-width: 768px) {
+  .text-5xl {
+    font-size: 3rem;
+  }
+
+  .custom-input {
+    font-size: 1rem;
+  }
 }
 </style>
