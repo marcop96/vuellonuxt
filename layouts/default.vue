@@ -7,14 +7,16 @@ useHead({
 </script>
 
 <template>
-  <header class="main-header">
-    <nav>
-      <nuxt-link to="/">Home</nuxt-link>
-    </nav>
-  </header>
-  <main class="main-content">
-    <slot />
-  </main>
+  <div class="container">
+    <header class="main-header">
+      <nav>
+        <nuxt-link to="/">Home</nuxt-link>
+      </nav>
+    </header>
+    <main class="main-content">
+      <slot />
+    </main>
+  </div>
 </template>
 <style>
 .main-header {
@@ -29,5 +31,8 @@ useHead({
 .main-content {
   background-color: #35495e;
   height: 100vh;
+}
+.container {
+  min-width: max-content;
 }
 </style>

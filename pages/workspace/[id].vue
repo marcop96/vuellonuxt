@@ -91,12 +91,7 @@ let drag = false;
     />
     <actionButton text="create Column" @click="createColumn" />
   </section>
-  <Column
-    :board="board"
-    :createCard="createCard"
-    :handleDragEnd="handleDragEnd"
-    v-model:drag="drag"
-  />
+  <Column :board="board" :createCard="createCard" v-model:drag="drag" />
 </template>
 <style scoped>
 .column-grid {

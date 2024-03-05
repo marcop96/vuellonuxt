@@ -6,7 +6,6 @@ import { workspaceList } from "~/store/useStore";
 const props = defineProps<{
   board: { name: string; columns: any };
   createCard: (column: any) => void;
-  handleDragEnd: () => void;
 }>();
 const drag = ref(false);
 function handleDragEnd() {
