@@ -99,11 +99,6 @@ function createCard(column: any) {
 </template>
 
 <style scoped>
-.column-grid {
-  display: grid;
-  grid-template-columns: repeat(v-bind(board.columns.length), 1fr);
-}
-
 .bg-middletonne {
   background-color: #3c8171;
 }

@@ -35,7 +35,7 @@ function removeColumn(column: Column) {
 
 <template>
   <div class="column-grid gap-2 mx-1">
-    <div
+    <main
       class="h-fit bg-middletonne rounded-lg mx-1"
       v-for="column in board.columns"
       :key="column.name"
@@ -54,7 +54,6 @@ function removeColumn(column: Column) {
         </div>
         <actionButton text="create Card" @click="createCard(column)" />
       </aside>
-
       <ul class="mx-3">
         <draggable
           :animation="200"
@@ -81,7 +80,7 @@ function removeColumn(column: Column) {
           </template>
         </draggable>
       </ul>
-    </div>
+    </main>
   </div>
 </template>
 
@@ -97,5 +96,9 @@ input {
   padding: 5px;
   font-size: 0.9rem;
   border-radius: 4px;
+}
+.column-grid {
+  display: grid;
+  grid-template-columns: repeat(v-bind(board.columns.length), 1fr);
 }
 </style>
