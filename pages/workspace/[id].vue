@@ -85,19 +85,16 @@ function createCard(column: any) {
 </script>
 
 <template>
-  <h1 class="text-center text-5xl p-3 text-white">
-    {{ board.name }}
-  </h1>
-  <section class="flex justify-center">
+  <div class="flex flex-col justify-center items-center pt-4">
     <input
       type="text"
-      placeholder="column name"
       class="custom-input"
+      placeholder="Column name..."
       v-model="newColumnName"
-      @keyup.enter="createColumn"
+      @keyup.enter="createColumn()"
     />
-    <actionButton text="create Column" @click="createColumn" />
-  </section>
+    <ActionButton text="Create Column" class="w-fit" @click="createColumn()" />
+  </div>
   <Column :board="board" :createCard="createCard" />
 </template>
 
@@ -113,12 +110,14 @@ function createCard(column: any) {
 
 input {
   color: #333;
+  text-align: center;
+  height: 40px;
+  width: 360px;
   background-color: #f4f4f4;
   border: 1px solid #333;
   margin: 5px;
   padding: 5px;
   font-size: 0.9rem;
-  border-radius: 4px;
 }
 
 .moving-card {
