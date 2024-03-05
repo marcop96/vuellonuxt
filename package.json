@@ -9,6 +9,7 @@
     "preview": "nuxt preview"
   },
   "dependencies": {
+    "@babel/types": "^7.24.0",
     "eslint": "^8.57.0",
     "nuxt": "^3.10.3",
     "vue": "^3.4.21",
