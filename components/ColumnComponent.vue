@@ -1,12 +1,24 @@
 <script setup lang="ts">
 import draggable from "vuedraggable";
+import type { Workspace } from "~/types";
+import { workspaceList } from "~/store/useStore";
 
-defineProps<{
+const props = defineProps<{
   board: { name: string; columns: any };
   createCard: (column: any) => void;
   handleDragEnd: () => void;
 }>();
-const drag = defineModel<boolean>("drag", { required: true });
+const drag = ref(false);
+function handleDragEnd() {
+  drag.value = false;
+  workspaceList.value = workspaceList.value.map((w: Workspace) => {
+    if (w.name === props.board.name) {
+      w.columns = props.board.columns;
+    }
+    return w;
+  });
+  localStorage.setItem("workspaceList", JSON.stringify(workspaceList.value));
+}
 </script>
 
 <template>
@@ -18,13 +30,16 @@ const drag = defineModel<boolean>("drag", { required: true });
     >
       <h2 class="text-center text-2xl text-white">{{ column.name }}</h2>
       <aside class="flex flex-col justify-center">
-        <input
-          type="text"
-          placeholder="card name"
-          class="custom-input"
-          v-model="column.newCardName"
-          @keyup.enter="createCard(column)"
-        />
+        <div class="w-full">
+          <input
+            type="text"
+            placeholder="card name"
+            class="custom-input w-"
+            v-model="column.newCardName"
+            @keyup.enter="createCard(column)"
+          />
+          <button class="w-2">pe</button>
+        </div>
         <actionButton text="create Card" @click="createCard(column)" />
       </aside>
 

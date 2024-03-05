@@ -44,7 +44,6 @@ function createColumn() {
       if (w.id === workspace.id) {
         w.columns = board.value.columns;
       }
-      console.log(workspaceList.value);
       return w;
     });
     localStorage.setItem("workspaceList", JSON.stringify(workspaceList.value));
@@ -61,22 +60,6 @@ function createCard(column: any) {
     });
     column.newCardName = "";
   }
-  workspaceList.value = workspaceList.value.map((w) => {
-    if (w.id === workspace.id) {
-      const boardIndex = w.columns.findIndex(
-        (b) => b.name === board.value.name
-      );
-      if (boardIndex !== -1) {
-        w.columns[boardIndex] = board.value.columns;
-      }
-    }
-    return w;
-  });
-  localStorage.setItem("workspaceList", JSON.stringify(workspaceList.value));
-}
-
-function handleDragEnd() {
-  drag = false;
   workspaceList.value = workspaceList.value.map((w) => {
     if (w.id === workspace.id) {
       const boardIndex = w.columns.findIndex(
