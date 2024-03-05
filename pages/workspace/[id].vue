@@ -81,8 +81,6 @@ function createCard(column: any) {
   // Save workspaceList to localStorage
   localStorage.setItem("workspaceList", JSON.stringify(workspaceList.value));
 }
-
-let drag = false;
 </script>
 
 <template>
@@ -99,7 +97,7 @@ let drag = false;
     />
     <actionButton text="create Column" @click="createColumn" />
   </section>
-  <Column :board="board" :createCard="createCard" v-model:drag="drag" />
+  <Column :board="board" :createCard="createCard" />
 </template>
 
 <style scoped>
