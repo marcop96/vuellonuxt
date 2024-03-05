@@ -10,16 +10,16 @@ const props = defineProps<{
 const drag = ref(false);
 
 function updateWorkspaceList() {
-  updateWorkspaceList();
-}
-function handleDragEnd() {
-  drag.value = false;
   workspaceList.value = workspaceList.value.map((w: Workspace) => {
     if (w.name === props.board.name) {
       w.columns = props.board.columns;
     }
     return w;
   });
+}
+function handleDragEnd() {
+  drag.value = false;
+  updateWorkspaceList();
   localStorage.setItem("workspaceList", JSON.stringify(workspaceList.value));
 }
 
