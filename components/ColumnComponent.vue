@@ -9,6 +9,9 @@ const props = defineProps<{
 }>();
 const drag = ref(false);
 
+function updateWorkspaceList() {
+  updateWorkspaceList();
+}
 function handleDragEnd() {
   drag.value = false;
   workspaceList.value = workspaceList.value.map((w: Workspace) => {
@@ -24,12 +27,8 @@ function removeColumn(column: Column) {
   props.board.columns = props.board.columns.filter(
     (c: Column) => c.id !== column.id
   );
-  workspaceList.value = workspaceList.value.map((w: Workspace) => {
-    if (w.name === props.board.name) {
-      w.columns = props.board.columns;
-    }
-    return w;
-  });
+  updateWorkspaceList();
+
   localStorage.setItem("workspaceList", JSON.stringify(workspaceList.value));
 }
 </script>
@@ -37,7 +36,7 @@ function removeColumn(column: Column) {
 <template>
   <div class="column-grid gap-2 mx-1">
     <div
-      class="h-96 bg-middletonne rounded-lg mx-1"
+      class="h-fit bg-middletonne rounded-lg mx-1"
       v-for="column in board.columns"
       :key="column.name"
     >
