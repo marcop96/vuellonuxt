@@ -17,6 +17,9 @@ const workspace = workspaceList.value.find(
   (w: Workspace) => w.id === Number(route.params.id)
 ) as Workspace;
 onMounted(() => {
+  useHead({
+    title: workspace.name,
+  });
   // Retrieve workspaceList from localStorage
   const storedWorkspaceList = localStorage.getItem("workspaceList");
   if (storedWorkspaceList) {
