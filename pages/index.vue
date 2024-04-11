@@ -1,9 +1,10 @@
 <script setup lang="ts">
-import { ref } from "vue";
+import { ref, onMounted } from "vue";
 import { workspaceList } from "../store/useStore";
 import ActionButton from "../components/actionButton.vue";
 
 const newWorkspaceName = ref("");
+const inputRef = ref(null);
 
 onMounted(() => {
   localStorage.getItem("workspaceList") &&
@@ -11,9 +12,13 @@ onMounted(() => {
       localStorage.getItem("workspaceList") as string
     ));
 });
-function createWorkspace() {
-  if (!newWorkspaceName.value) return console.log("no name");
 
+function createWorkspace() {
+  if (!newWorkspaceName.value) {
+    inputRef.value.classList.add("error-class");
+    return;
+  }
+  inputRef.value.classList.remove("error-class");
   const randomId = Math.floor(Math.random() * 100);
 
   workspaceList.value.push({
@@ -30,6 +35,7 @@ function createWorkspace() {
 <template>
   <div class="flex flex-col justify-center items-center p-4">
     <input
+      ref="inputRef"
       type="text"
       class="custom-input"
       placeholder="workspace name..."
@@ -77,5 +83,9 @@ input {
 
 .bg-middletonne {
   background-color: #3c8171;
+}
+
+.error-class {
+  border: solid 3px red;
 }
 </style>
